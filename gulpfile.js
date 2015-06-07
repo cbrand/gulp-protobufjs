@@ -54,3 +54,11 @@ gulp.task('mocha:junit', function(done) {
                 .on('end', done);
         });
 });
+
+gulp.task('jenkins', [
+    'mocha:junit'
+]);
+
+gulp.task('default', [
+    'mocha:coverage', 'lint:js'
+]);
