@@ -6,32 +6,10 @@
  */
 
 var fs = require('fs');
-var ProtoBuf = require('protobufjs');
 var util = require('protobufjs/cli/pbjs/util');
 
-/**
- * pbjs source: Plain JSON descriptor
- * @exports pbjs/sources/json
- * @function
- * @param {string} filename Source file
- * @param {!Object.<string,*>=} options Options
- * @returns {!ProtoBuf.Builder}
- */
-var json = function (filename, options) {
-    options = options || [];
-    var builder = ProtoBuf.newBuilder(util.getBuilderOptions(options, 'using'));
-    var data = json.load(filename, options);
-    ProtoBuf.loadJson(data, builder, filename);
-    return builder;
-};
-
-var description = 'Plain JSON descriptor';
-
-/**
- * Module description.
- * @type {string}
- */
-json.description = description;
+var load;
+var loadString;
 
 /**
  * Loads a JSON descriptor including imports.
@@ -39,9 +17,9 @@ json.description = description;
  * @param {!Object.<string,*>} options Options
  * @returns {*} JSON descriptor
  */
-json.load = function (filename, options) {
+load = function (filename, options) {
     var data = fs.readFileSync(filename).toString('utf-8');
-    return json.loadString(data, options);
+    return loadString(data, options);
 };
 
 /**
@@ -50,7 +28,7 @@ json.load = function (filename, options) {
  * @param {!Object.<string,*>} options Options
  * @returns {*} JSON descriptor
  */
-json.loadString = function (jsonString, options) {
+loadString = function (jsonString, options) {
     var data = JSON.parse(jsonString);
     var imports = data.imports;
     if (Array.isArray(imports)) {
@@ -64,7 +42,7 @@ json.loadString = function (jsonString, options) {
             var fileFound = false;
             for (var j = 0; j < path.length; ++j) {
                 try {
-                    imports[i] = json.load(path[j] + '/' + imports[i], options);
+                    imports[i] = load(path[j] + '/' + imports[i], options);
                     fileFound = true;
                     break;
                 } catch (e) {
@@ -80,6 +58,6 @@ json.loadString = function (jsonString, options) {
 };
 
 module.exports = {
-    parse: json.load,
-    parseString: json.loadString
+    parse: load,
+    parseString: loadString
 };
