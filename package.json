@@ -39,7 +39,7 @@
     "through2": "^0.6.5"
   },
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha test/*.js --reporter spec"
+    "test": "node_modules/mocha/bin/mocha test/*.js test/**/*.js --reporter spec"
   },
   "keywords": [
     "gulpplugin",
