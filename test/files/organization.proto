@@ -1,0 +1,6 @@
+import 'person.proto';
+package test;
+
+message Organization {
+    repeated Person employees = 1;
+}
