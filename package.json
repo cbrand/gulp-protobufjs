@@ -23,7 +23,8 @@
     "gulp-util": "~3.0.1",
     "protobufjs": "^4.0.0-b3",
     "q": "^1.4.1",
-    "vinyl": "^0.5.0"
+    "vinyl": "^0.5.0",
+    "through2": "^0.6.5"
   },
   "devDependencies": {
     "chai": "^3.0.0",
@@ -35,8 +36,7 @@
     "jshint-stylish": "^2.0.0",
     "mocha": "^2.2.5",
     "mocha-junit-reporter": "^1.4.0",
-    "should": "^6.0.3",
-    "through2": "^0.6.5"
+    "should": "^6.0.3"
   },
   "scripts": {
     "test": "node_modules/mocha/bin/mocha test/*.js test/**/*.js --reporter spec"
