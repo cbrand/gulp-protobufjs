@@ -56,7 +56,7 @@ function gulpProtobufJs(options) {
             return new File({
                 cwd: file.cwd,
                 base: file.base,
-                path: path.basename(file.path) + '.js',
+                path: file.path + '.js',
                 contents: new Buffer(buildData)
             });
         }).then(function (newFile) {

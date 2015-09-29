@@ -88,10 +88,15 @@ describe('index', function () {
 
     describe('targets', function () {
         var withOptions = function (options) {
+            var fakeFile = new File({
+                contents: new Buffer(protoBufData)
+            });
+
+            return withFileOptions(fakeFile, options);
+        };
+
+        var withFileOptions = function (file, options) {
             return Q.Promise(function (resolve, reject) {
-                var fakeFile = new File({
-                    contents: new Buffer(protoBufData)
-                });
                 var plugin = gulpprotobuf(options);
                 plugin.once('data', function (data) {
                     resolve(data);
@@ -99,7 +104,7 @@ describe('index', function () {
                 plugin.once('error', function (err) {
                     reject(err);
                 });
-                plugin.write(fakeFile);
+                plugin.write(file);
             });
         };
 
@@ -134,6 +139,18 @@ describe('index', function () {
                 file.contents.toString('utf-8').should.startWith('{');
             });
         });
+
+        it('should keep the correct path', function () {
+            withFileOptions(new File({
+                contents: new Buffer(protoBufData),
+                path: '/this/is/a/test/path'
+            }), {
+                target: 'js'
+            }).then(function(file) {
+                file.path.should.equal('/this/is/a/test/path.js');
+            });
+        });
+
     });
 
 });
