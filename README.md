@@ -32,6 +32,7 @@ gulp.task('default', function () {
     * `target`: (default `commonjs`) Output format. Can be `amd`, `commonjs`, `js`, `json` or `proto`.
     * `path`: Optional path to specify where the base path for the proto imports is.
     * `encoding` (default `utf-8`) Encoding which should be used to parse the input files.
+    * `ext` The file extension which should be set. Is being determined automatically if not given depending on the `target` configuration.
 
 ## License
 
