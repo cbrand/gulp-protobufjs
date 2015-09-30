@@ -151,6 +151,41 @@ describe('index', function () {
             });
         });
 
+        var fileWithPath = function() {
+            return new File({
+                contents: new Buffer(protoBufData),
+                path: '/this/is/a/test/path.proto'
+            });
+        };
+
+        var executeWithTargetAndExpect = function(target, ext) {
+            return withFileOptions(fileWithPath(), {
+                target: target
+            }).then(function(file) {
+                file.path.should.endWith(ext);
+            });
+        };
+
+        it('should set the correct extension for js', function() {
+            return executeWithTargetAndExpect('js', '.proto.js');
+        });
+
+        it('should set the correct extension for json', function() {
+            return executeWithTargetAndExpect('json', '.proto.json');
+        });
+
+        it('should set the correct extension for amd', function() {
+            return executeWithTargetAndExpect('amd', '.proto.js');
+        });
+
+        it('should set the correct extension for commonjs', function() {
+            return executeWithTargetAndExpect('commonjs', '.proto.js');
+        });
+
+        it('should set the correct extension for proto', function() {
+            return executeWithTargetAndExpect('proto', '.proto');
+        });
+
     });
 
 });

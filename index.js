@@ -53,10 +53,20 @@ function gulpProtobufJs(options) {
         }).then(function (builder) {
             return targets[options.target](builder, options);
         }).then(function (buildData) {
+
+            var filePath = file.path;
+            var dirName = file.base;
+            var fileName;
+            if(filePath) {
+                fileName = path.basename(filePath, options.ext);
+                filePath = path.join(dirName, fileName + options.ext);
+            }
+
+
             return new File({
                 cwd: file.cwd,
                 base: file.base,
-                path: file.path + '.js',
+                path: filePath,
                 contents: new Buffer(buildData)
             });
         }).then(function (newFile) {
