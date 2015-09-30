@@ -1,4 +1,5 @@
 var targets = require('./targets');
+var defaultFileExtensions = require('./defaultFileExtensions');
 
 // Consts
 const PLUGIN_NAME = 'gulp-protobufjs';
@@ -14,6 +15,8 @@ function verifyOptions(options) {
     var encoding = options.encoding || 'utf-8';
     var input = options.input || 'protobuf';
     var target = options.target || 'commonjs';
+    var extension = options.ext || null;
+
     if (input !== 'protobuf' && input !== 'json') {
         throw new PluginError('Input option only accepts protobuf or json as parameter');
     }
@@ -22,11 +25,16 @@ function verifyOptions(options) {
         throw new PluginError('Target ' + target + ' not found');
     }
 
+    if(extension === null) {
+        extension = defaultFileExtensions[target] || '.js';
+    }
+
     options = {
         encoding: encoding,
         input: input,
         target: target,
-        path: options.path
+        path: options.path,
+        ext: extension
     };
     if (options.path !== undefined && !Array.isArray(options.path)) {
         options.path = [options.path];
