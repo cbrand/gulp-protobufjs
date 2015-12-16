@@ -57,7 +57,7 @@ function gulpProtobufJs(options) {
             var filePath = file.path;
             var dirName = file.base;
             var fileName;
-            if(filePath) {
+            if (filePath) {
                 fileName = path.basename(filePath, options.ext);
                 filePath = path.join(dirName, fileName + options.ext);
             }

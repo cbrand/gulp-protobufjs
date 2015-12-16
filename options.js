@@ -25,7 +25,7 @@ function verifyOptions(options) {
         throw new PluginError('Target ' + target + ' not found');
     }
 
-    if(extension === null) {
+    if (extension === null) {
         extension = defaultFileExtensions[target] || '.js';
     }
 
