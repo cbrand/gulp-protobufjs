@@ -21,7 +21,7 @@
   ],
   "dependencies": {
     "gulp-util": "~3.0.1",
-    "protobufjs": "^4.0.0-b3",
+    "protobufjs": "^5.0.0",
     "q": "^1.4.1",
     "vinyl": "^0.5.0",
     "through2": "^0.6.5"
