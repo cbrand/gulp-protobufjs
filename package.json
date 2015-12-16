@@ -1,7 +1,7 @@
 {
   "name": "gulp-protobufjs",
   "description": "Converts profobuf files to json files being usable in protobufjs",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "homepage": "https://github.com/cbrand/gulp-protobufjs",
   "author": {
     "name": "Christoph Brand"
@@ -46,7 +46,7 @@
     "protobufjs",
     "protobuf"
   ],
-  "readme": "# [gulp](https://github.com/wearefractal/gulp)-protobufjs\n[Downloads](https://npmjs.org/package/gulp-protobufjs)\n\n> Converts protobuf files utilizing the [protobufjs](https://github.com/dcodeIO/ProtoBuf.js/) library.\n\n## Install\n\nInstall with [npm](https://npmjs.org/package/gulp-protobufjs).\n\n```\nnpm install --save-dev gulp-protobufjs\n```\n\n## Examples\n\n```js\nvar gulp = require('gulp');\nvar gulpprotobuf = require('gulp-protobufjs');\n\ngulp.task('default', function () {\n  return gulp.src('file.proto')\n    .pipe(gulpprotobuf())\n    .pipe(gulp.dest('out/'));\n});\n```\n\n## API\n\n`gulpprotobuf(options)`\n* `options`:\n    * `input`: (default `protobuf`) Input format. Can be either `protobuf` or `json`\n    * `target`: (default `commonjs`) Output format. Can be `amd`, `commonjs`, `js`, `json` or `proto`.\n    * `path`: Optional path to specify where the base path for the proto imports is.\n    * `encoding` (default `utf-8`) Encoding which should be used to parse the input files.\n\n## License\n\n[MIT](http://en.wikipedia.org/wiki/MIT_License) @ Christoph Brand\n",
+  "readme": "# [gulp](https://github.com/wearefractal/gulp)-protobufjs\n[Downloads](https://npmjs.org/package/gulp-protobufjs)\n\n> Converts protobuf files utilizing the [protobufjs](https://github.com/dcodeIO/ProtoBuf.js/) library.\n\n## Install\n\nInstall with [npm](https://npmjs.org/package/gulp-protobufjs).\n\n```\nnpm install --save-dev gulp-protobufjs\n```\n\n## Examples\n\n```js\nvar gulp = require('gulp');\nvar gulpprotobuf = require('gulp-protobufjs');\n\ngulp.task('default', function () {\n  return gulp.src('file.proto')\n    .pipe(gulpprotobuf())\n    .pipe(gulp.dest('out/'));\n});\n```\n\n## API\n\n`gulpprotobuf(options)`\n* `options`:\n    * `input`: (default `protobuf`) Input format. Can be either `protobuf` or `json`\n    * `target`: (default `commonjs`) Output format. Can be `amd`, `commonjs`, `js`, `json` or `proto`.\n    * `path`: Optional path to specify where the base path for the proto imports is.\n    * `encoding` (default `utf-8`) Encoding which should be used to parse the input files.\n    * `ext` The file extension which should be set. Is being determined automatically if not given depending on the `target` configuration.\n\n## License\n\n[MIT](http://en.wikipedia.org/wiki/MIT_License) @ Christoph Brand\n",
   "readmeFilename": "README.md",
   "_id": "gulp-protobufjs@1.0.0",
   "_from": "gulp-protobufjs@~1.0.0"
