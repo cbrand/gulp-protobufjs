@@ -1,7 +1,7 @@
 {
   "name": "gulp-protobufjs",
   "description": "Converts profobuf files to json files being usable in protobufjs",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "homepage": "https://github.com/cbrand/gulp-protobufjs",
   "author": {
     "name": "Christoph Brand"
