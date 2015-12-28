@@ -18,6 +18,7 @@ function gulpProtobufJs(options) {
 
     // Creating a stream through which each file will pass
     return through.obj(function (file, enc, cb) {
+        var self = this;
         if (file.isNull()) {
             // return empty file
             cb(null, file);
@@ -72,7 +73,11 @@ function gulpProtobufJs(options) {
         }).then(function (newFile) {
             cb(null, newFile);
         }).catch(function (err) {
-            cb(PluginError(err.toString()), file);
+            self.emit(
+                'error',
+                PluginError(err, { showStack: true, error: err }),
+                file
+            );
         });
 
     });
