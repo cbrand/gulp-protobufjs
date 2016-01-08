@@ -1,0 +1,8 @@
+import 'person.proto';
+import 'telephone.proto';
+package test;
+
+message Organization {
+    repeated Person employees = 1;
+    repeated PhoneNumber phone = 2;
+}

@@ -1,0 +1,14 @@
+package test;
+import 'telephone.proto';
+
+message Person {
+  required string name = 1;
+  required int32 id = 2;
+  optional string email = 3;
+
+  repeated PhoneNumber phone = 4;
+}
+
+message AddressBook {
+  repeated Person person = 1;
+}

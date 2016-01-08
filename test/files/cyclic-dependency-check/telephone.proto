@@ -1,0 +1,13 @@
+package test;
+
+message PhoneNumber {
+
+    enum PhoneType {
+        MOBILE = 0;
+        HOME = 1;
+        WORK = 2;
+    }
+
+    required string number = 1;
+    optional PhoneType type = 2 [default = HOME];
+}

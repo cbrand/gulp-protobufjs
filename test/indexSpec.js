@@ -146,44 +146,76 @@ describe('index', function () {
                 path: '/this/is/a/test/path'
             }), {
                 target: 'js'
-            }).then(function(file) {
+            }).then(function (file) {
                 file.path.should.equal('/this/is/a/test/path.js');
             });
         });
 
-        var fileWithPath = function() {
+        var fileWithPath = function () {
             return new File({
                 contents: new Buffer(protoBufData),
                 path: '/this/is/a/test/path.proto'
             });
         };
 
-        var executeWithTargetAndExpect = function(target, ext) {
+        var executeWithTargetAndExpect = function (target, ext) {
             return withFileOptions(fileWithPath(), {
                 target: target
-            }).then(function(file) {
+            }).then(function (file) {
                 file.path.should.endWith(ext);
             });
         };
 
-        it('should set the correct extension for js', function() {
+        it('should set the correct extension for js', function () {
             return executeWithTargetAndExpect('js', '.proto.js');
         });
 
-        it('should set the correct extension for json', function() {
+        it('should set the correct extension for json', function () {
             return executeWithTargetAndExpect('json', '.proto.json');
         });
 
-        it('should set the correct extension for amd', function() {
+        it('should set the correct extension for amd', function () {
             return executeWithTargetAndExpect('amd', '.proto.js');
         });
 
-        it('should set the correct extension for commonjs', function() {
+        it('should set the correct extension for commonjs', function () {
             return executeWithTargetAndExpect('commonjs', '.proto.js');
         });
 
-        it('should set the correct extension for proto', function() {
+        it('should set the correct extension for proto', function () {
             return executeWithTargetAndExpect('proto', '.proto');
+        });
+
+    });
+
+    describe('when working with structures having multiple imports of the same file', function () {
+
+        before(function () {
+            basePath = path.resolve(__dirname + '/files/cyclic-dependency-check');
+            protoBufPath = path.join(basePath, 'organization.proto');
+            protoBufData = fs.readFileSync(protoBufPath).toString('utf-8');
+        });
+
+        it('should not return an error', function () {
+            return Q.Promise(function (resolve, reject) {
+                var fakeFile = new File({
+                    contents: new Buffer(protoBufData),
+                    path: protoBufPath,
+                    base: basePath,
+                    cwd : "/"
+                });
+                var plugin = gulpprotobuf({
+                    path: basePath
+                });
+                plugin.write(fakeFile);
+                plugin.once('data', function (file) {
+                    file.contents.toString('utf-8').should.startWith('module.exports');
+                    resolve();
+                });
+                plugin.once('error', function (err) {
+                    reject(err);
+                });
+            });
         });
 
     });
