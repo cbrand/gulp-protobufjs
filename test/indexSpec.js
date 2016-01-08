@@ -202,7 +202,7 @@ describe('index', function () {
                     contents: new Buffer(protoBufData),
                     path: protoBufPath,
                     base: basePath,
-                    cwd : "/"
+                    cwd : '/'
                 });
                 var plugin = gulpprotobuf({
                     path: basePath
