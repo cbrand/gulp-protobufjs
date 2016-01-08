@@ -4,7 +4,7 @@
  * https://github.com/dcodeIO/ProtoBuf.js/blob/master/cli/pbjs/sources/proto.js
  */
 var fs = require('fs');
-var path = require('path');
+var nodePath = require('path');
 var ProtoBuf = require('protobufjs');
 var util = require('protobufjs/cli/pbjs/util');
 var optionsHandler = require('../options');
@@ -12,12 +12,13 @@ var parseProtobufString;
 var parseProtobuf;
 
 parseProtobuf = function (protoBufPath, options, loaded) {
+    loaded = loaded || [];
     options = optionsHandler.verify(options);
-    protoBufPath = path.resolve(protoBufPath);
-    if (loaded.indexOf(protoBufPath) >= 0)
+    protoBufPath = nodePath.resolve(protoBufPath);
+    if (loaded.indexOf(protoBufPath) >= 0) {
         return {};
-    else {
-        loaded.push(protoBufPath)
+    } else {
+        loaded.push(protoBufPath);
     }
     var data = fs.readFileSync(protoBufPath, options.encoding || 'utf-8');
     return parseProtobufString(data, options, loaded);
@@ -28,24 +29,28 @@ parseProtobufString = function (protoBufString, options, loaded) {
     var parser = new ProtoBuf.DotProto.Parser(protoBufString);
     var data = parser.parse();
     loaded = loaded || [];
-    if (Array.isArray(data['imports'])) {
-        var imports = data['imports'];
-        for (var i=0; i<imports.length; i++) {
+    if (Array.isArray(data.imports)) {
+        var imports = data.imports;
+        for (var i = 0; i < imports.length; i++) {
             // Skip pulled imports and legacy descriptors
-            if (typeof imports[i] !== 'string' || (util.isDescriptor(imports[i]) && !options.legacy))
+            if (typeof imports[i] !== 'string' || (util.isDescriptor(imports[i]) && !options.legacy)) {
                 continue;
+            }
             // Merge imports, try include paths
-            (function() {
-                var path = options.path || [];
-                for (var j=0; j<path.length; ++j) {
-                    var import_filename = path.resolve(path[j] + "/", imports[i]);
-                    if (!fs.existsSync(import_filename))
-                        continue;
-                    imports[i] = parseProtobuf(import_filename, options, loaded);
-                    return;
+            var fileFound = false;
+            var path = options.path || [];
+            for (var j = 0; j < path.length; ++j) {
+                var importFilename = nodePath.resolve(path[j] + '/', imports[i]);
+                if (!fs.existsSync(importFilename)) {
+                    continue;
                 }
-                throw Error("File not found: "+imports[i]);
-            })();
+                imports[i] = parseProtobuf(importFilename, options, loaded);
+                fileFound = true;
+                break;
+            }
+            if (!fileFound) {
+                throw Error('File not found: ' + imports[i]);
+            }
         }
     }
     return data;
