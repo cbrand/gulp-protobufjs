@@ -82,7 +82,7 @@ function gulpProtobufJs(options) {
             );
             throw pluginError;
         }).catch(function(err) {
-            if(!options.noLog) {
+            if (!options.noLog) {
                 gutil.log(gutil.colors.red('Error (' + err.plugin + '): ' + err.message));
             }
             cb(err);
