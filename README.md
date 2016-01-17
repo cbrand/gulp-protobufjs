@@ -33,6 +33,8 @@ gulp.task('default', function () {
     * `path`: Optional path to specify where the base path for the proto imports is.
     * `encoding` (default `utf-8`) Encoding which should be used to parse the input files.
     * `ext` The file extension which should be set. Is being determined automatically if not given depending on the `target` configuration.
+    * `noErrorReporting` (default `false`) Gulp ignores errors on the console for asynchronous operations. Because of that when an error occurs during processing it will be manually added to the console. If this is not wanted the flag disables it.
+    * `showStack` (default `false`) Indication if the stack of an error should be printed to console or not. Per default this is off to keep the formatting in the command line clean. 
 
 ## License
 
