@@ -4,6 +4,7 @@ var Q = require('q');
 var ProtoBuf = require('protobufjs');
 var util = require('protobufjs/cli/pbjs/util');
 var File = require('vinyl');
+var gutil = require('gulp-util');
 
 var optionsHandling = require('./options');
 var targets = require('./targets');
@@ -25,7 +26,7 @@ function gulpProtobufJs(options) {
             return;
         }
 
-        Q.Promise(function (resolve) {
+        new Q.Promise(function (resolve) {
             if (file.isBuffer()) {
                 resolve(file.contents);
             }
@@ -73,11 +74,18 @@ function gulpProtobufJs(options) {
         }).then(function (newFile) {
             cb(null, newFile);
         }).catch(function (err) {
+            var pluginError = PluginError(err, { showStack: true, error: err });
             self.emit(
                 'error',
-                PluginError(err, { showStack: true, error: err }),
+                pluginError,
                 file
             );
+            throw pluginError;
+        }).catch(function(err) {
+            if(!options.noLog) {
+                gutil.log(gutil.colors.red('Error (' + err.plugin + '): ' + err.message));
+            }
+            cb(err);
         });
 
     });

@@ -51,7 +51,7 @@ gulp.task('mocha:junit', function (done) {
                     }
                 }))
                 .pipe(istanbul.writeReports({
-                    reporters: ['lcov', 'json', 'text', 'text-summary', 'cobertura', 'html']
+                    reporters: ['text', 'text-summary', 'cobertura', 'html']
                 }))
                 .on('end', done);
         });

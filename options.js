@@ -6,8 +6,8 @@ const PLUGIN_NAME = 'gulp-protobufjs';
 
 var gutil = require('gulp-util');
 
-function PluginError(message) {
-    return new gutil.PluginError(PLUGIN_NAME, message);
+function PluginError(message, options) {
+    return new gutil.PluginError(PLUGIN_NAME, message, options || {});
 }
 
 function verifyOptions(options) {
@@ -16,6 +16,7 @@ function verifyOptions(options) {
     var input = options.input || 'protobuf';
     var target = options.target || 'commonjs';
     var extension = options.ext || null;
+    var noLog = options.noLog || false;
 
     if (input !== 'protobuf' && input !== 'json') {
         throw new PluginError('Input option only accepts protobuf or json as parameter');
@@ -34,7 +35,8 @@ function verifyOptions(options) {
         input: input,
         target: target,
         path: options.path,
-        ext: extension
+        ext: extension,
+        noLog: noLog
     };
     if (options.path !== undefined && !Array.isArray(options.path)) {
         options.path = [options.path];
