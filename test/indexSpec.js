@@ -28,7 +28,7 @@ describe('index', function () {
                 contents: new Buffer(protoBufData)
             });
             var plugin = gulpprotobuf({
-                noLog: true
+                noErrorReporting: true
             });
             plugin.write(fakeFile);
             plugin.once('data', function (file) {
@@ -48,7 +48,7 @@ describe('index', function () {
             });
             var plugin = gulpprotobuf({
                 input: 'json',
-                noLog: true
+                noErrorReporting: true
             });
             plugin.write(fakeFile);
             plugin.once('data', function (file) {
@@ -67,7 +67,7 @@ describe('index', function () {
                 contents: new Buffer(jsonData)
             });
             var plugin = gulpprotobuf({
-                noLog: true
+                noErrorReporting: true
             });
             plugin.once('error', function () {
                 resolve();
@@ -83,7 +83,7 @@ describe('index', function () {
             });
             var plugin = gulpprotobuf({
                 input: 'json',
-                noLog: true
+                noErrorReporting: true
             });
             plugin.once('error', function () {
                 resolve();
@@ -208,11 +208,11 @@ describe('index', function () {
                     contents: new Buffer(protoBufData),
                     path: protoBufPath,
                     base: basePath,
-                    cwd : '/'
+                    cwd: '/'
                 });
                 var plugin = gulpprotobuf({
                     path: basePath,
-                    noLog: true
+                    noErrorReporting: true
                 });
                 plugin.write(fakeFile);
                 plugin.once('data', function (file) {

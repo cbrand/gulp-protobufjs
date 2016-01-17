@@ -82,8 +82,13 @@ function gulpProtobufJs(options) {
             );
             throw pluginError;
         }).catch(function(err) {
-            if (!options.noLog) {
-                gutil.log(gutil.colors.red('Error (' + err.plugin + '): ' + err.message));
+            if (!options.noErrorReporting) {
+                var message = gutil.colors.red('Error (' + err.plugin + '): ' + err.message);
+                if (options.showStack) {
+                    message += '\n' + gutil.colors.red(err.stack);
+                }
+
+                gutil.log(message);
             }
             cb(err);
         });
